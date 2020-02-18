@@ -1,18 +1,18 @@
 # Documentation for **slider**
 
 A **slider** is a control made up of 2 parts: the **handle** and the **track**.
-The **track** is often in a shape of a straight strip, on which the **handle** is placed.
+The **track** is often in the shape of a straight strip, on which the **handle** is placed.
 The position of the **handle** relative to the **track** represents the value of the **slider**.
 
-The two ends of the **track** are the most extreme position the **handle** can reach, thus represents the two extremum of the **slider**.
-As the **handle** moves along the **track**, its value grows linearly in respect of the movement.
+The two ends of the **track** are the most extreme positions the **handle** can reach, thus representing the two extremums of the **slider**.
+As the **handle** moves along the **track**, its value grows linearly in respect to the movement.
 
 You can control the granularity of the value by specifying the step length, which is the least amount the value can grow at a single time.
-Note that if the step length is specified, all possible growth is guaranteed to be a multiple of which.
+Note that all possible growth is guaranteed to be a multiple of the step length if it's specified.
 
 ## Interaction
 
-Users can interact with the **slider** by dragging the **handle**, clicking on the **track** or pressing the arrow keys while focused.
+Users can interact with the **slider** by dragging the **handle**, clicking on the **track** or pressing the arrow keys while the focus is on the **handle**.
 
 Developers can interact through JavaScript APIs, which will be discussed below.
 
@@ -27,7 +27,7 @@ Here's an example of it:
 ></con-trol>
 ```
 
-As shown above, despite of the attribute `type`, it also has some extra attributes.
+As shown above, despite the attribute `type`, it also has some extra attributes.
 These attributes specify the behaviour of the **slider**.
 
 - `max`: Specifies the maximum limit of a **slider**.
@@ -37,8 +37,8 @@ These attributes specify the behaviour of the **slider**.
 
 ## CSS
 
-Unlike the native `<input type="range">`, the visual appearance a **slider** can be highly custom-defined.
-There are many CSS variables available for developers to mess with.
+Unlike the native `<input type="range">`, the visual appearance of a **slider** can be highly custom-defined.
+There are many CSS variables available for developers to work with.
 Here is a list of them:
 
 - `--width`: Controls the horizontal size of the **slider**.
@@ -73,7 +73,7 @@ Use accessors instead of directly modify the attributes of a **slider** because 
 ### Event listeners
 
 Different types of events would be fired at different stages when interacting with a **slider**.
-You can attach event listeners on them.
+You can attach event listeners in order to capture them.
 Here is a list of the types and their description:
 
 - `start`: Fired when the value starts to change.
@@ -84,8 +84,8 @@ Here is a list of the types and their description:
 
 Notes:
 
-- `start` is fired before the value has changed, whilst others are all fired afterwards.
+- `start` is fired before the value changes, whilst others are all fired afterwards.
 - `change` is always fired before `slide` and `jump`.
-- Draging the **handle** would fire a `start` event, followed by a series of `change` and `slide` events, and finally a `set` event.
-- Clicking on the **track** or setting the value through JavaScript would fire a `start` event, followed by a `change` and a `jump` event, and finally a `set` event.
-- Manipulating the slider by the arrow keys on the keyboard is considered as both continuous and discontinuous, thus would fire a `start` event, followed by a series of `change`, `jump` and `slide` events, and finally a `set` event.
+- Dragging the **handle** would fire a `start` event, followed by a series of `change` and `slide` events, and finally a `set` event.
+- Clicking on the **track** or setting the value through JavaScript are both considered as discontinuous, thus would fire a `start` event, followed by a `change` and a `jump` event, and finally a `set` event.
+- Manipulating the slider by the arrow keys on the keyboard is considered as both continuous and discontinuous (since one can either press the key or hold the key down), thus would fire a `start` event, followed by a series of `change`, `jump` and `slide` events, and finally a `set` event.
