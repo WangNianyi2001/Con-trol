@@ -1,0 +1,119 @@
+con-trol[type=slider] {
+	/* slider */
+	--width: calc(var(--track-length) + max(2 * (var(--track-horizontal-padding) + var(--track-border-width)), var(--handle-height) + var(--handle-border-width) * 2));
+	--height: calc(max(var(--track-width) + 2 * (var(--track-vertical-padding) + var(--track-border-width)), var(--handle-height) + var(--handle-border-width) * 2));
+	/* track */
+	--track-length: 6em;
+	--track-width: 1em;
+	--track-horizontal-padding: calc(var(--track-width) / 2);
+	--track-vertical-padding: 0px;
+	--track-border-width: 1px;
+	--track-border-style: solid;
+	--track-border-color: dimgray;
+	--track-radius: calc(var(--track-width) / 2 + var(--track-border-width) + var(--track-vertical-padding));
+	--track-background: lightgray;
+	/* handle */
+	--handle-width: .75em;
+	--handle-height: .75em;
+	--handle-border-width: 1px;
+	--handle-border-style: solid;
+	--handle-border-color: gray;
+	--handle-radius: min(var(--handle-width), calc(var(--handle-height)) + var(--handle-border-width));
+	--handle-background: white;
+	/* highlight */
+	--highlight-horizontal-padding: calc(var(--highlight-width) / 2);
+	--highlight-vertical-padding: 0px;
+	--highlight-width: calc(var(--track-width) / 2);
+	--highlight-border-width: 0px;
+	--highlight-border-style: none;
+	--highlight-border-color: black;
+	--highlight-radius: calc(var(--track-width) / 2 + var(--highlight-border-width) + var(--track-vertical-padding));
+	--highlight-background: darkgray;
+	/* anchor */
+	--anchor-width: 1px;
+	--anchor-height: var(--track-width);
+	--anchor-background: darkgray;
+}
+/* Default visual preferences above, can be custom-defined */
+/* slider */
+con-trol[type=slider] {
+	--ratio: 0;
+	position: relative;
+	display: inline-block;
+	width: var(--width);
+	height: var(--height);
+	line-height: var(--height);
+}
+/* track */
+con-trol[type=slider]>[con-role=track] {
+	position: relative;
+	left: calc((var(--width) - var(--track-length)) / 2 - var(--track-horizontal-padding) - var(--track-border-width));
+	top: calc((var(--height) - var(--track-width)) / 2 - var(--track-vertical-padding) - var(--track-border-width));
+	padding: var(--track-vertical-padding) var(--track-horizontal-padding);
+	width: calc(var(--track-length));
+	height: calc(var(--track-width));
+	border: var(--track-border-width) var(--track-border-style) var(--track-border-color);
+	border-radius: var(--track-radius);
+	background: var(--track-background);
+	cursor: pointer;
+	overflow: hidden;
+}
+/* handle */
+con-trol[type=slider]>[con-role=handle] {
+	position: absolute;
+	left: calc((var(--width) - var(--track-length) - var(--handle-width)) / 2 - var(--handle-border-width) + var(--track-length) * var(--ratio));
+	top: calc((var(--height) - var(--handle-height)) / 2 - var(--handle-border-width));
+	width: var(--handle-width);
+	height: var(--handle-height);
+	border: var(--handle-border-width) var(--handle-border-style) var(--handle-border-color);
+	border-radius: var(--handle-radius);
+	background: var(--handle-background);
+	cursor: pointer;
+}
+con-trol[type=slider]:not([selection-type=range])>[con-role=handle]~[con-role=handle] {
+	display: none;
+}
+con-trol[type=slider][selection-type=range]>[con-role=handle] {
+	left: calc((var(--width) - var(--track-length) - var(--handle-width)) / 2 - var(--handle-border-width) + var(--track-length) * var(--left));
+}
+con-trol[type=slider][selection-type=range]>[con-role=handle]~[con-role=handle] {
+	left: calc((var(--width) - var(--track-length) - var(--handle-width)) / 2 - var(--handle-border-width) + var(--track-length) * var(--right));
+}
+/* highlight */
+con-trol[type=slider]>[con-role=track]>[con-role=highlight] {
+	position: relative;
+	left: calc(0px - var(--highlight-border-width) - var(--highlight-horizontal-padding));
+	top: calc((var(--track-width) - var(--highlight-width)) / 2 - var(--highlight-border-width) - var(--highlight-vertical-padding));
+	padding: var(--highlight-vertical-padding) var(--highlight-horizontal-padding);
+	width: calc(var(--ratio) * var(--track-length));
+	height: var(--highlight-width);
+	border: var(--highlight-border-width) var(--highlight-border-style) var(--highlight-border-color);
+	border-radius: var(--highlight-radius);
+	background: var(--highlight-background);
+}
+con-trol[type=slider][selection-type=range]>[con-role=track]>[con-role=highlight] {
+	left: calc(0px - var(--highlight-border-width) - var(--highlight-horizontal-padding) + var(--left) * var(--track-length));
+	width: calc((var(--right) - var(--left)) * var(--track-length));
+}
+con-trol[type=slider]:not([show-highlight])>[con-role=track]>[con-role=highlight] {
+	display: none;
+}
+/* anchors */
+con-trol[type=slider]>[con-role=track]>[con-role=anchors] {
+	position: absolute;
+	left: var(--track-horizontal-padding);
+	top: 0;
+	width: var(--track-length);
+	height: var(--track-width);
+}
+con-trol[type=slider]:not([show-anchors])>[con-role=track]>[con-role=anchors] {
+	display: none;
+}
+con-trol[type=slider]>[con-role=track]>[con-role=anchors]>[con-role=anchor] {
+	position: absolute;
+	top: calc((var(--track-width) - var(--anchor-height)) / 2);
+	left: calc(var(--ratio) * var(--track-length) - var(--anchor-width) / 2);
+	width: var(--anchor-width);
+	height: var(--anchor-height);
+	background: var(--anchor-background);
+}
