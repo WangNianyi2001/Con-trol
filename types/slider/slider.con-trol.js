@@ -3,23 +3,37 @@
 
 	const Control = window.Control;
 
+	function placeAnchors() {
+		const _ = this.components.anchors = [];
+		if(!this.hasAttribute('anchors'))
+			return;
+		this.getAttribute('anchors')
+			.replace(/\s/g, '')
+			.split(',')
+			.forEach(position => {
+				const $ = document.createElement('div');
+				_.push($);
+				$.setAttribute('con-role', 'anchor');
+				$.style.setProperty('--ratio', position);
+				this.components.$anchors.appendChild($);
+			});
+	}
 	function initDOM() {
+		const _ = this.components;
 		// the slider itself
 		this.setAttribute('role', 'slider');
-		const setCSSVarByAttr = (attr, css) =>
-			this.hasAttribute(attr) && this.style.setProperty('--' + css, this.getAttribute(attr));
-		setCSSVarByAttr('value', 'ratio');
-		setCSSVarByAttr('left', 'left');
-		setCSSVarByAttr('right', 'right');
+		['ratio', 'left', 'right'].map(
+			attr => this.hasAttribute(attr) &&
+				this.style.setProperty('--' + attr, this.getAttribute(attr))
+		);
 		// track
-		const $track = document.createElement('div');
-		$track.setAttribute('con-role', 'track');
-			const $highlight = document.createElement('div');
-			$highlight.setAttribute('con-role', 'highlight');
-			$track.appendChild($highlight);
-		this.appendChild($track);
+		this.appendChild(_.$track = document.createElement('div'));
+		_.$track.setAttribute('con-role', 'track');
+		// highlight
+		_.$track.appendChild(_.$highlight = document.createElement('div'));
+		_.$highlight.setAttribute('con-role', 'highlight');
 		// handle
-		const [$handle, $sub_handle] = [0, 0].map(() => {
+		[_.$handle, _.$sub_handle] = [0, 0].map(() => {
 			const $ = document.createElement('div');
 			$.setAttribute('con-role', 'handle');
 			$.setAttribute('tabindex', '0');	// make the handle focusable
@@ -27,22 +41,12 @@
 			return $;
 		});
 		// anchors
-		const $anchors = document.createElement('div');
-		$anchors.setAttribute('con-role', 'anchors');
-		if(this.hasAttribute('anchors')) {
-			this.getAttribute('anchors')
-				.replace(/\s/g, '')
-				.split(',')
-				.forEach(position => {
-					const $anchor = document.createElement('div');
-					$anchor.setAttribute('con-role', 'anchor');
-					$anchor.style.setProperty('--ratio', position);
-					$anchors.appendChild($anchor);
-				});
-		}
-		$track.appendChild($anchors);
+		_.$track.appendChild(_.$anchors = document.createElement('div'));
+		_.$anchors.setAttribute('con-role', 'anchors');
+		placeAnchors.call(this);
 	}
 	function Slider() {
+		this.components = {};
 		initDOM.call(this);
 	}
 	Slider.prototype = {

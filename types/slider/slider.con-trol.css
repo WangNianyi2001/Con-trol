@@ -70,13 +70,13 @@ con-trol[type=slider]>[con-role=handle] {
 	background: var(--handle-background);
 	cursor: pointer;
 }
-con-trol[type=slider]:not([selection-type=range])>[con-role=handle]~[con-role=handle] {
+con-trol[type=slider]:not([selection=range])>[con-role=handle]~[con-role=handle] {
 	display: none;
 }
-con-trol[type=slider][selection-type=range]>[con-role=handle] {
+con-trol[type=slider][selection=range]>[con-role=handle] {
 	left: calc((var(--width) - var(--track-length) - var(--handle-width)) / 2 - var(--handle-border-width) + var(--track-length) * var(--left));
 }
-con-trol[type=slider][selection-type=range]>[con-role=handle]~[con-role=handle] {
+con-trol[type=slider][selection=range]>[con-role=handle]~[con-role=handle] {
 	left: calc((var(--width) - var(--track-length) - var(--handle-width)) / 2 - var(--handle-border-width) + var(--track-length) * var(--right));
 }
 /* highlight */
@@ -91,7 +91,7 @@ con-trol[type=slider]>[con-role=track]>[con-role=highlight] {
 	border-radius: var(--highlight-radius);
 	background: var(--highlight-background);
 }
-con-trol[type=slider][selection-type=range]>[con-role=track]>[con-role=highlight] {
+con-trol[type=slider][selection=range]>[con-role=track]>[con-role=highlight] {
 	left: calc(0px - var(--highlight-border-width) - var(--highlight-horizontal-padding) + var(--left) * var(--track-length));
 	width: calc((var(--right) - var(--left)) * var(--track-length));
 }
